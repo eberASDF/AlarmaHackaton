@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "Vigilance",
+    "slug": "vigilance",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.alarmahackaton.vigilance"
+    },
+    "android": {
+      "package": "com.alarmahackaton.vigilance"
+    },
+    "plugins": [
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Permite que Vigilance use Face ID para desactivar la vigilancia."
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "enableBackgroundPlayback": true
+        }
+      ],
+      [
+        "expo-sensors",
+        {
+          "motionPermission": "Permite que Vigilance detecte movimiento para proteger el dispositivo."
+        }
+      ],
+      "expo-asset"
+    ]
+  }
+}

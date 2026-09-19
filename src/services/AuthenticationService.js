@@ -1,27 +1,38 @@
+import * as LocalAuthentication from 'expo-local-authentication';
+
 export class AuthenticationService {
-  constructor({ mock = true } = {}) {
-    this.mock = mock;
-    this.validPin = '1234';
-  }
-
   async authenticateBiometric() {
-    await new Promise((resolve) => window.setTimeout(resolve, 650));
-    return {
-      ok: true,
-      method: 'biometric',
-      message: this.mock ? 'Biometría mock aprobada.' : 'Biometría aprobada.'
-    };
-  }
-
-  async authenticatePin(pin) {
-    await new Promise((resolve) => window.setTimeout(resolve, 280));
-    if (pin === this.validPin) {
-      return { ok: true, method: 'pin' };
+    const hasHardware = await LocalAuthentication.hasHardwareAsync();
+    if (!hasHardware) {
+      return {
+        ok: false,
+        method: 'biometric',
+        message: 'Este dispositivo no tiene biometría disponible.'
+      };
     }
+
+    const enrolled = await LocalAuthentication.isEnrolledAsync();
+    if (!enrolled) {
+      return {
+        ok: false,
+        method: 'biometric',
+        message: 'No hay una huella o rostro configurado en el dispositivo.'
+      };
+    }
+
+    const result = await LocalAuthentication.authenticateAsync({
+      promptMessage: 'Desactivar modo vigilancia',
+      promptDescription: 'Confirma tu identidad para detener la protección.',
+      cancelLabel: 'Cancelar',
+      fallbackLabel: '',
+      disableDeviceFallback: true,
+      biometricsSecurityLevel: 'strong'
+    });
+
     return {
-      ok: false,
-      method: 'pin',
-      message: 'PIN incorrecto. Intenta nuevamente.'
+      ok: result.success,
+      method: 'biometric',
+      message: result.success ? 'Identidad confirmada.' : 'No se pudo confirmar la identidad.'
     };
   }
 }

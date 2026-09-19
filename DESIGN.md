@@ -2,7 +2,7 @@
 
 ## Direction
 
-Vigilance uses an iOS-native operating language: system typography, soft layered surfaces, restrained controls, and state color as the main signal. It avoids theatrical security visuals and keeps the product feeling like a real utility on a phone.
+Vigilance uses a native mobile operating language: system typography, soft layered surfaces, restrained controls, and state color as the main signal. The interface is implemented with React Native components for Android and iOS.
 
 ## Visual System
 
@@ -14,12 +14,12 @@ Use the Apple system stack: `-apple-system`, `BlinkMacSystemFont`, `SF Pro Displ
 
 ## Components
 
-The app avoids card containers except for the bottom screen-switching navigation. Primary actions are large iOS-style buttons. Theme selection uses lightweight icon controls. Bottom navigation stays fixed to the mobile app shell and keeps the only elevated floating surface.
+The app avoids card containers except for the bottom screen-switching navigation. Primary actions are large native pressable controls. Theme selection uses lightweight icon controls. Bottom navigation stays fixed to the mobile app shell and keeps the only elevated floating surface.
 
 ## Motion
 
-State changes should animate through color, scale, soft shadow, and opacity. Armed mode adds a subtle red pulse around the main indicator. Alarm mode increases pulse strength and introduces a slide-in alert banner. Motion reinforces state but must not hide content.
+State changes animate through color, scale, soft shadow, and opacity using the React Native Animated API. Armed mode adds a subtle red pulse around the main indicator. Alarm mode increases the visual urgency and shows the live sensor intensity without hiding content.
 
 ## Interaction
 
-Activation shows a short arming phase before the app becomes armed. Deactivation opens authentication rather than disarming directly. PIN entry uses digit indicators and a numeric keypad. History appears as one unified chronological stream. Main status uses an animated icon library for the lock/protection indicator.
+Activation shows a short arming phase before the app becomes armed. Deactivation opens the device biometric prompt rather than disarming directly. History appears as one unified chronological stream in the bottom navigation. Main status uses an animated icon library for the lock/protection indicator.

@@ -1,18 +1,28 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export const StorageService = {
-  get(key, fallback) {
+  async get(key, fallback) {
     try {
-      const value = window.localStorage.getItem(key);
-      return value ? JSON.parse(value) : fallback;
+      const value = await AsyncStorage.getItem(key);
+      return value === null ? fallback : JSON.parse(value);
     } catch {
       return fallback;
     }
   },
 
-  set(key, value) {
+  async set(key, value) {
     try {
-      window.localStorage.setItem(key, JSON.stringify(value));
+      await AsyncStorage.setItem(key, JSON.stringify(value));
     } catch {
-      // Local storage can be unavailable in private or embedded contexts.
+      // The app remains usable if local persistence is temporarily unavailable.
+    }
+  },
+
+  async remove(key) {
+    try {
+      await AsyncStorage.removeItem(key);
+    } catch {
+      // Legacy local data is non-critical and can be retried on the next launch.
     }
   }
 };
